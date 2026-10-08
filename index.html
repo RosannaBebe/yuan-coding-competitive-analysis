@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>猿编程与竞品综合分析｜课堂恢复 × 经营口径</title>
+  <style>
+    :root {
+      --ink: #1b2430;
+      --muted: #5d6b7a;
+      --line: #d8e0e8;
+      --paper: #f6f4ef;
+      --card: #fffdf9;
+      --navy: #1d3a52;
+      --teal: #1f6f6a;
+      --coral: #b85c45;
+      --gold: #8a6a2f;
+      --ok: #e8f3ef;
+      --warn: #f8f1e4;
+      --danger: #f8ece8;
+      --info: #eaf1f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", "Noto Serif SC", serif;
+      font-size: 16.5px;
+      line-height: 1.7;
+    }
+    a { color: var(--teal); }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 12px 7vw;
+      background: rgba(246, 244, 239, 0.94);
+      border-bottom: 1px solid var(--line);
+      font-family: "Avenir Next", "PingFang SC", "Noto Sans SC", sans-serif;
+      font-size: 13px;
+    }
+    nav a { color: var(--navy); text-decoration: none; }
+    header, main { width: min(1080px, 86vw); margin: 0 auto; }
+    header { padding: 48px 0 18px; }
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--coral);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+    h1 {
+      margin: 0;
+      font-size: 40px;
+      line-height: 1.2;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+    .lead { max-width: 760px; font-size: 19px; }
+    .meta { color: var(--muted); font-family: "Avenir Next", "PingFang SC", sans-serif; font-size: 13px; }
+    h2 {
+      margin: 42px 0 12px;
+      font-size: 26px;
+      line-height: 1.3;
+    }
+    h3 { margin: 0 0 8px; font-size: 18px; }
+    section { padding-bottom: 8px; }
+    .thesis {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 22px 0 8px;
+    }
+    article, .note, .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    article, .panel { padding: 16px 18px; }
+    .note { padding: 14px 16px; }
+    .note strong, article strong { font-weight: 700; }
+    .warn { background: var(--warn); }
+    .info { background: var(--info); }
+    .ok { background: var(--ok); }
+    .danger { background: var(--danger); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      font-family: "Avenir Next", "PingFang SC", "Noto Sans SC", sans-serif;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th:first-child, td:first-child { min-width: 7.5em; }
+    th { color: var(--navy); background: #f3efe6; font-weight: 650; }
+    .tabs, .switch {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0;
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+    }
+    button {
+      padding: 6px 12px;
+      color: var(--navy);
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+    }
+    button.active { color: #fff; background: var(--navy); border-color: var(--navy); }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    ul { margin: 8px 0 0; padding-left: 18px; }
+    li { margin: 5px 0; }
+    .small { color: var(--muted); font-family: "Avenir Next", "PingFang SC", sans-serif; font-size: 13px; }
+    .tag {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+    footer { width: min(1080px, 86vw); margin: 28px auto 48px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      h1 { font-size: 30px; }
+      .thesis, .grid, .three { grid-template-columns: 1fr; }
+      nav { padding: 12px 7vw; }
+    }
+    @media print {
+      nav, .tabs, .switch { display: none; }
+      .view { display: block !important; }
+      body { background: #fff; }
+      article, .note, .panel, table { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#read">读法</a>
+    <a href="#judgment">综合判断</a>
+    <a href="#product">课堂恢复</a>
+    <a href="#commerce">经营口径</a>
+    <a href="#bridge">如何交叉</a>
+    <a href="#interview">面试表达</a>
+    <a href="#sources">来源</a>
+  </nav>
+
+  <header>
+    <p class="kicker">二面备忘 · 核查日 2026-09-22</p>
+    <h1>猿编程与竞品综合分析</h1>
+    <p class="lead">把“孩子卡住后能否回到学习”和“公开规模能否证明商业效率”放在同一份分析里：前者决定产品该做什么，后者决定这些动作值不值得扩大。</p>
+    <p class="meta">整合《猿编程：从课堂求助到学习恢复》与《经营规模可查，商业效率不可强行推算》。未接触各家内部数据，不提供虚构评分、GMV 或 LTV。</p>
+  </header>
+
+  <main>
+    <section id="read">
+      <h2>先分开两套分母</h2>
+      <div class="thesis">
+        <article>
+          <span class="tag">产品分母</span>
+          <h3>一次实操任务里，孩子有没有被接住</h3>
+          <p>比较的是低龄图形化课堂中，孩子卡住后能否得到针对当前作品的帮助，并回到本节课。完课、AI 回复了、代码能运行，都不直接等于学会。</p>
+        </article>
+        <article>
+          <span class="tag">商业分母</span>
+          <h3>一个付费家庭在固定观察期内贡献了什么</h3>
+          <p>累计服务学员、累计付费用户、工具累计用户、集团月活不是同一个数。不能用这些数字相乘来估算年度 GMV、在读规模或客户终身价值。</p>
+        </article>
+      </div>
+      <p class="note warn"><strong>交叉规则：</strong>产品体验可以提出“可能改善续班或降低重复服务”的假设；只有同课、同龄、同批次的实验或经营数据，才能把体验改善记成商业结果。规模大，不自动说明当前付费效率高。</p>
+    </section>
+
+    <section id="judgment">
+      <h2>四家对照：能说什么，不能说什么</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>品牌</th>
+            <th>课堂与产品形态</th>
+            <th>公开规模口径</th>
+            <th>不能推出的结论</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>猿编程</td>
+            <td>真人直播组织教学，配套编程工具、课程报告与班主任服务。试听中的“？”是操作演示回看，不是针对当前作品的求助。</td>
+            <td>官网称累计服务学员 800 余万。应用宝页面显示猿编程 App 22.2 万下载。</td>
+            <td>不能说 800 余万是当前正价在读；不能因试听没找到入口就断定全平台没有人工辅导。</td>
+          </tr>
+          <tr>
+            <td>核桃编程</td>
+            <td>公开课程强调一学九练、差异化进度、闯关与学习报告，覆盖图形化到 Python、C++。</td>
+            <td>官网索引称 2025 年 12 月累计付费用户超 1000 万。另有家长端下载观察，不能当学习端。</td>
+            <td>不能说它当前正价在读最大，也不能把累计付费乘正式课标价当成年度 GMV。</td>
+          </tr>
+          <tr>
+            <td>编程猫</td>
+            <td>图形化与文本工具生态；Kitten N 公开列出 AI tutor。本次低龄试课能看到老师求助入口，但帮助不一定及时。</td>
+            <td>官网称截至 2026 年 5 月累计用户超 4300 万。应用宝“编程猫在线”显示 64.9 万下载。</td>
+            <td>累计用户不是付费学员；一个 App 的下载也不能代表全部工具和校园业务。</td>
+          </tr>
+          <tr>
+            <td>洪恩编程</td>
+            <td>公开介绍含探索、创作、实操，以及分级错误处理和编程大模型 Debug。截图体现的是场景任务和可见反馈，不是全部产品。</td>
+            <td>洪恩集团 2025 年平均总 MAU 2498 万、营收 8.070 亿元。对应 App 的应用宝页面显示 2.1 万下载。</td>
+            <td>集团月活和营收不能记到编程单品名下；洪恩启蒙编程与洪恩编程也不是同一个 App。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small">下载数为本次可读的应用商店页面显示值，不是全网、近一年或去重后的新增下载。DAU／MAU 没有取得四家编程单品的同期可靠比较。</p>
+    </section>
+
+    <section id="product">
+      <h2>产品主张：从课堂求助到学习恢复</h2>
+      <p class="note info"><strong>优先验证的不是“再做一个 AI 聊天框”。</strong>先做限定课程里的实操卡点恢复：孩子主动求助，系统拿到当前作品和近期操作，给出下一步提示，用后续操作验证是否恢复；恢复不了，就把同一份上下文交给老师，并帮助孩子回到本节课。</p>
+
+      <div class="tabs" id="product-tabs">
+        <button class="active" data-view="goal">目标</button>
+        <button data-view="compare">竞品如何支持实操</button>
+        <button data-view="case">一个具体案例</button>
+      </div>
+
+      <div class="view" id="goal">
+        <table>
+          <thead><tr><th>目标</th><th>用户结果</th><th>看什么</th><th>不要误读成什么</th></tr></thead>
+          <tbody>
+            <tr><td>恢复实操</td><td>卡住后能继续做，并回到本节课关键任务</td><td>有效恢复率；首条有用反馈时长；回到课堂里程碑的时间</td><td>AI 回复了，就算解决</td></tr>
+            <tr><td>独立掌握</td><td>这次得到帮助后，下次同类任务更能自己完成</td><td>无 AI 的同构任务正确率；延迟迁移；所需提示深度</td><td>完课、过关或代码能运行等于学会</td></tr>
+            <tr><td>人机协同</td><td>老师少花时间重复定位，多处理复杂和情绪问题</td><td>每百个学生任务的人工分钟；重复求助；人工接力完成率</td><td>以少转人工为唯一目标</td></tr>
+            <tr><td>家长可见</td><td>家长知道孩子独立做了什么、哪里得到帮助</td><td>报告理解度；提示前后的完成区别</td><td>把 AI 生成或代做的作品当成独立成果</td></tr>
+          </tbody>
+        </table>
+        <div class="grid" style="margin-top:14px">
+          <article>
+            <h3>猿编程已有的资产</h3>
+            <p>直播提供共同的课堂目标和节奏，编程工具知道孩子正在做什么。若两者打通，AI 不必泛泛回答“代码怎么写”，而可以判断孩子是否偏离了这节课正在教的内容。</p>
+          </article>
+          <article>
+            <h3>当前试听暴露的缺口</h3>
+            <p>操作演示视频解决的是“标准步骤怎么做”。它不能诊断孩子当前作品为什么没按预期运行，也不能把现场交给老师。正式课是否另有入口，需要向面试官确认。</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="view" id="compare" hidden>
+        <div class="switch" id="brand-switch"></div>
+        <div id="brand-panel"></div>
+      </div>
+
+      <div class="view" id="case" hidden>
+        <article>
+          <h3>假设：孩子说“我点了绿旗，怎么没反应？”</h3>
+          <p>截图里王子的脚本是“当角色被点击 → 重复 4 次（下一个造型；等待 1 秒）”。仅凭截图不能判定程序错误，也不知道完整题目。</p>
+          <ol>
+            <li>先核对当前角色、关联脚本、题目目标和实际点击记录。</li>
+            <li>若确认是误解触发方式，只说下一步：“这段积木等你点王子才开始，点一下左边的王子试试。”</li>
+            <li>让孩子自己操作，并用角色点击和造型变化验证，而不是反复宣称已经解决。</li>
+            <li>恢复后回到当堂必做步骤；稍后换个角色，看孩子能否不靠 AI 说出程序如何开始。</li>
+          </ol>
+          <p><strong>不应直接改成“当绿旗被点击”。</strong>那可能改掉了这节课要教的事件概念。程序能运行、符合题意、孩子理解，是三件不同的事。</p>
+        </article>
+        <div class="three" style="margin-top:14px">
+          <article><h3>学生看到</h3><p>固定的“帮我看一下”。可点“没反应／不知道怎么做／和想的不一样”。一步只给一个动作，随时可以找老师。</p></article>
+          <article><h3>系统拿到</h3><p>课题、已教概念、作品结构、近期操作和运行、提示历史、作品版本、课堂阶段。孩子改过作品后，旧建议要重新核对。</p></article>
+          <article><h3>老师接到</h3><p>发生了什么、孩子试过什么、AI 提示过什么、为什么转接。辅导老师处理个体问题，主讲老师只看是否需要调整全班节奏。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="commerce">
+      <h2>商业主张：规模可查，效率不可推算</h2>
+      <div class="three">
+        <p class="note danger"><strong>禁止的乘法 1</strong><br>累计付费用户 × 正式课标价 ≠ 年度 GMV。</p>
+        <p class="note danger"><strong>禁止的乘法 2</strong><br>累计用户 × 假设付费率 ≠ 当前在读规模。</p>
+        <p class="note danger"><strong>禁止的乘法 3</strong><br>集团 MAU × 假设编程占比 ≠ 编程单品用户。</p>
+      </div>
+      <table>
+        <thead>
+          <tr><th>品牌</th><th>公开数字</th><th>原义与时间</th><th>产品侧应继续追问</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>猿编程</td><td>800 余万</td><td>累计服务学员；官网未标注截止日</td><td>活跃正价在读、续班、净退费，以及 AI 是否减少重复定位工时</td></tr>
+          <tr><td>核桃编程</td><td>超 1000 万</td><td>2025 年 12 月累计付费用户</td><td>低价体验、正价首购、续购和服务成本是否分开</td></tr>
+          <tr><td>编程猫</td><td>超 4300 万</td><td>截至 2026 年 5 月累计用户，含工具生态</td><td>免费创作到正价课程、校园方案到付费合同的转化</td></tr>
+          <tr><td>洪恩编程</td><td>单品未取得可靠披露</td><td>集团 2025 年营收 8.070 亿元、平均总 MAU 2498 万</td><td>具体 App 的付费、留存、交叉购买和 AI 服务成本</td></tr>
+        </tbody>
+      </table>
+      <div class="grid" style="margin-top:14px">
+        <article>
+          <h3>洪恩只能当集团参照</h3>
+          <p>2025 年营业收入 8.070 亿元，同比下降 12.5%，净利润约 9540 万元。2026 年一季度营收 1.825 亿元，平均总 MAU 2362 万。月活按各 App 设备相加且跨 App 不去重，不能当成编程付费孩子数。</p>
+        </article>
+        <article>
+          <h3>课程业务更该看履约，而不是日活</h3>
+          <p>按课表上课的产品，活跃频次本来就不同于每天打开的工具。更贴近的指标是活跃付费家庭、应到课履约、每周有效实操、单期续班和净退费。</p>
+        </article>
+      </div>
+      <p class="small">近一年按 2025-09 至 2026-08 理解。四家编程业务都没有取得该窗口内可复核的完整 GMV；四家也没有可比的可靠 LTV。</p>
+    </section>
+
+    <section id="bridge">
+      <h2>两部分如何合成一个产品判断</h2>
+      <table>
+        <thead><tr><th>产品动作</th><th>它可能带来的商业变化</th><th>成立前必须看到的证据</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>一键求助并携带当前作品</td>
+            <td>减少卡死后的退出，提高当堂任务完成和后续出勤</td>
+            <td>同课同龄下，恢复率和核心里程碑提升；不能只统计 AI 回复次数</td>
+          </tr>
+          <tr>
+            <td>规则处理确定错误，AI 做适龄分层提示</td>
+            <td>老师少做重复定位，把时间留给复杂问题</td>
+            <td>每百个任务的人工分钟下降；少转人工本身还不是成本下降</td>
+          </tr>
+          <tr>
+            <td>未恢复时把同一上下文交给老师</td>
+            <td>降低重复沟通，改善服务体验和退费风险</td>
+            <td>人工接力完成率、响应时长和净退费；保留孩子主动找老师的权利</td>
+          </tr>
+          <tr>
+            <td>报告区分独立完成、提示后完成、老师帮助</td>
+            <td>让家长看见真实学习，支持续班判断</td>
+            <td>跨期续班和进阶购买改善；一次完课提升不能代替 LTV</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="grid" style="margin-top:14px">
+        <article class="ok">
+          <h3>值得扩大的条件</h3>
+          <p>增量净收入，扣除新增履约、模型调用、质检、教师接力和项目投入后仍为正；同时，无 AI 的同类任务表现没有下降。节省的工时只有真正减少支出或承接了更多业务，才算兑现收益。</p>
+        </article>
+        <article>
+          <h3>不建议的商业化方式</h3>
+          <p>不要在效果未验证时，把基础答疑拆成付费附加包；不要用 AI 直接完成作品来换短期完课；不要把全部续费归因给 AI。</p>
+        </article>
+      </div>
+      <h3 style="margin-top:22px">建议的落地顺序</h3>
+      <table>
+        <thead><tr><th>顺序</th><th>做什么</th><th>为什么现在做</th></tr></thead>
+        <tbody>
+          <tr><td>P0</td><td>看得见现场的一键求助，外加携带上下文的人工接力</td><td>同时解决“找不到人”和“找到人后还要重新描述”</td></tr>
+          <tr><td>P1</td><td>对齐本节课里程碑的短恢复路径；按需出现、逐步撤掉的操作支架</td><td>让帮助服务于直播进度，而不是把孩子带进另一段长对话</td></tr>
+          <tr><td>P2</td><td>用真实卡点生成已审定的变式练习，并写入课程报告</td><td>把一次获助变成可验证的进步，再观察续班</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="interview">
+      <h2>面试时可以这样收束</h2>
+      <article>
+        <p>我带孩子体验后，关注的不是哪家 AI 功能更多，而是孩子实操卡住时能否被接住并回到这节课。编程猫让我看到求助入口本身有价值，但孩子仍要描述现场；洪恩展示了具体任务和运行反馈如何降低上手负担；核桃的公开产品强调高频练习和过程反馈；CodeCombat 则提供了“只提示当前代码、教师可关闭”的参照。</p>
+        <p>猿编程已经有直播节奏和编程工具。我会先验证“实操卡点恢复”：一键求助、带上题目和作品、规则处理确定问题、AI 做有限提示，没恢复就把上下文交给老师。主指标是恢复和核心任务完成，并用无 AI 的同类任务守住独立掌握。</p>
+        <p>商业上，我核对过公开数字，但 800 余万累计服务、1000 万累计付费、4300 万累计用户和洪恩集团月活不是同一个分母，不能推 GMV 或 LTV。这个专项是否扩大，要看扣除模型、质检和人工兜底后，对续班、净退费和单位服务成本的增量贡献。</p>
+      </article>
+      <h3 style="margin-top:18px">进门后优先确认的五件事</h3>
+      <ol>
+        <li>正式课现在有哪些求助入口，谁接单，响应到什么程度？</li>
+        <li>高频卡点是操作、概念、设备，还是直播节奏不匹配？</li>
+        <li>现有图形化工具或 AI IDE 能否读取作品、操作和运行状态？</li>
+        <li>这个岗位当前最优先的是实操完成、教学效率、留存，还是家长感知？</li>
+        <li>活跃正价在读、续班、净退费和单次人工服务时长，现在分别怎么定义？</li>
+      </ol>
+    </section>
+
+    <section id="sources">
+      <h2>来源与不能支持的说法</h2>
+      <div class="grid">
+        <article>
+          <h3>产品与功能</h3>
+          <ul>
+            <li><a href="https://www.ybccode.com/ybc-home">猿编程课程、工具与授课方式</a></li>
+            <li><a href="https://www.ybccode.com/download">猿编程客户端与直播说明</a></li>
+            <li><a href="https://official.hetao101.com/curriculum">核桃编程课程体系</a></li>
+            <li><a href="https://www.codemao.cn/">编程猫与 Kitten 工具生态</a></li>
+            <li><a href="https://codecombat.com/features/">CodeCombat AI hints</a></li>
+            <li><a href="https://arxiv.org/abs/2410.03017">Tutor CoPilot 随机对照研究</a></li>
+          </ul>
+        </article>
+        <article>
+          <h3>规模与财务</h3>
+          <ul>
+            <li><a href="https://www.ybccode.com/">猿编程官网累计服务口径</a></li>
+            <li><a href="https://hetao101.com/reports">核桃编程大事记</a></li>
+            <li><a href="https://www.codemao.cn/gocodemao">编程猫公司简介</a></li>
+            <li><a href="https://www.sec.gov/Archives/edgar/data/1814423/000110465926048541/ih-20251231x20f.htm">洪恩 2025 年 20-F</a></li>
+            <li><a href="https://www.prnewswire.com/news-releases/ihuman-inc-announces-first-quarter-2026-unaudited-financial-results-302813211.html">洪恩 2026 年一季度业绩</a></li>
+            <li><a href="https://sj.qq.com/appdetail/com.ada.tethys.student">应用宝：猿编程</a></li>
+          </ul>
+        </article>
+      </div>
+      <p class="note" style="margin-top:14px"><strong>目前不能说：</strong>“猿编程没有 AI 或没有求助”“洪恩只会让孩子玩游戏”“核桃能解决所有错误”“编程猫老师普遍不及时”“800 余万、1000 万或 4300 万可以直接比较”“海外辅导实验已经证明国内低龄大班自动助教有效”。Tutor CoPilot 约 4 个百分点的掌握率提升，只支持“AI 可以先辅助教师”这一方向。</p>
+    </section>
+  </main>
+  <footer>综合研究备忘 · 产品判断、试点建议与商业口径核验 · 不是投资建议，也不代表各家内部经营结果。</footer>
+
+  <script>
+    const brands = {
+      "猿编程": {
+        role: "对照基线｜直播教学 + 编程实操",
+        strength: "已有共同课堂节奏、课程目标和编程工具。若数据打通，辅助可以同时知道孩子在做什么、老师正在教什么。",
+        limit: "试听里的演示回看不等于作品诊断。大班统一进度和个体卡点之间存在协调成本，正式课求助覆盖率仍待核实。",
+        move: "先连接课堂、作品和人工支持，不先重做整套 AI 课程。"
+      },
+      "核桃编程": {
+        role: "高频练习与个性化学习过程",
+        strength: "小任务、过程反馈和不同练习路径，便于识别知识点卡点。这是产品设计优势，不是效果排名。",
+        limit: "结构化题目诊断不等于能处理开放作品和孩子说不清的问题。累计付费也不能直接换算正价在读。",
+        move: "借鉴任务里程碑和过程报告，但辅助必须把孩子带回直播课堂的下一节点。"
+      },
+      "编程猫": {
+        role: "创作工具与可见的课堂支持",
+        strength: "本次试课能找到老师入口，可见性本身带来安心感；公开工具生态也提供了创作和 AI tutor 参照。",
+        limit: "孩子仍可能要重新描述现场，等待也可能打断实操。4300 万累计用户不能当成付费学员。",
+        move: "从“有入口”推进到“老师和 AI 接同一份现场”，并明确已接收、处理中、待人工、已恢复。"
+      },
+      "洪恩编程": {
+        role: "场景任务与启蒙反馈；财务只看集团",
+        strength: "具体任务、少量选择、示例和可见后果，能降低第一步的负担。",
+        limit: "完成带示例的关卡不等于换情境后能独立编程。集团营收、利润和 MAU 不能归属编程单品。",
+        move: "在卡住时临时突出相关积木、角色和运行反馈，能力提升后撤掉支架。"
+      },
+      "CodeCombat": {
+        role: "海外机制参照｜任务内提示 + 教师控制",
+        strength: "帮助贴着当前代码，解释错误和给提示，不直接给完整解法；课堂中可由教师关闭。",
+        limit: "文本关卡不等同低龄多角色积木课，也没有证明可直接迁移到国内大班直播。",
+        move: "借鉴提示边界和教师开关，同时补上低龄操作、直播节奏和人工接力。"
+      }
+    };
+
+    const switcher = document.querySelector("#brand-switch");
+    const panel = document.querySelector("#brand-panel");
+    Object.keys(brands).forEach((name, index) => {
+      const button = document.createElement("button");
+      button.textContent = name;
+      button.className = index === 0 ? "active" : "";
+      button.addEventListener("click", () => {
+        switcher.querySelectorAll("button").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        renderBrand(name);
+      });
+      switcher.appendChild(button);
+    });
+
+    function renderBrand(name) {
+      const item = brands[name];
+      panel.innerHTML = `
+        <article>
+          <span class="tag">${item.role}</span>
+          <h3>${name}</h3>
+          <p><strong>可借鉴：</strong>${item.strength}</p>
+          <p><strong>边界：</strong>${item.limit}</p>
+          <p><strong>对猿编程的动作：</strong>${item.move}</p>
+        </article>`;
+    }
+    renderBrand("猿编程");
+
+    document.querySelectorAll("#product-tabs button").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("#product-tabs button").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        document.querySelectorAll("#product .view").forEach(view => {
+          view.hidden = view.id !== button.dataset.view;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
